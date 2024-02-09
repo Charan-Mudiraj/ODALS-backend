@@ -3,6 +3,7 @@ const User = require("../schemas/user");
 const multer = require("multer");
 const path = require("path");
 const j = require("joi");
+const fs = require("fs");
 
 const validateStringWithNoSpaces = (value, helpers) => {
   if (typeof value !== "string" || /\s/.test(value)) {
@@ -150,13 +151,17 @@ Router.get("/avatar", async (req, res) => {
   const user = await User.findById(userID);
   if (user) {
     const imgPath = user.avatar;
-    let absolutePath;
-    try {
-      absolutePath = path.join(__dirname + "/../" + imgPath);
-    } catch (e) {
-      absolutePath = path.join(__dirname + "/../uploads/unknown-profile.png");
-    }
-    res.sendFile(absolutePath);
+    const absolutePath = path.join(__dirname + "/../" + imgPath);
+    const defaultImagePath = path.join(
+      __dirname + "/../uploads/unknown-profile.png"
+    );
+    fs.access(absolutePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        res.sendFile(defaultImagePath);
+      } else {
+        res.sendFile(absolutePath);
+      }
+    });
   } else {
     res.json({ status: "fail", message: "Fetch Error" });
   }
