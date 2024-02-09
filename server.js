@@ -6,6 +6,7 @@ const { connect } = require("mongoose");
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT;
+const DB_URL = process.env.MONGODB_URL;
 
 app.use(express.json());
 app.use(cors());
@@ -17,4 +18,8 @@ app.listen(PORT, () => {
   console.log("listening on PORT: " + PORT);
 });
 
-connect(process.env.MONGODB_URL);
+if (DB_URL) {
+  connect(process.env.MONGODB_URL);
+} else {
+  console.log("DB URL is Invalid");
+}
