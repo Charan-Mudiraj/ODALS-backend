@@ -150,6 +150,8 @@ Router.get("/avatar", async (req, res) => {
   const user = await User.findById(userID);
   if (user) {
     const imgPath = user.avatar;
+    console.log(__dirname);
+    console.log(path.join(__dirname + "/../" + imgPath));
     res.sendFile(path.join(__dirname + "/../" + imgPath));
   } else {
     res.json({ status: "fail", message: "Fetch Error" });
