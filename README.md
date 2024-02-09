@@ -4,6 +4,8 @@
 
 ## Demo Link - https://youtu.be/s74KGbOHtb8
 
+## Stack Used - express, JOI, mongoDB, multer
+
 ## Steps to Run Locally:
 
 - on main directory, run `npm install`
