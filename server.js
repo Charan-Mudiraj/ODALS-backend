@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/user", userRoutes);
 app.get("/", (req, res) => {
-  res.send("This is Backend");
+  res.status(200).send("Backend has started");
 });
 app.listen(PORT, () => {
   console.log("listening on PORT: " + PORT);
